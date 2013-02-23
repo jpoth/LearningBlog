@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Learningblog : Design Pattern: Singleton Pattern" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Learningblog</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/jpoth/LearningBlog">View on GitHub</a>
+
+          <h1 id="project_title">Learningblog</h1>
+          <h2 id="project_tagline">Design Pattern: Singleton Pattern</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/jpoth/LearningBlog/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/jpoth/LearningBlog/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>Singleton pattern falls under Creational pattern 
+Singleton: A class which only a single instance can exist.</p>
+
+<p>Following code snippet is from <a href="http://msdn.microsoft.com/en-us/library/ff650316.aspx">MSDN</a></p>
+
+<p>using System;<br>
+public class Singleton {<br>
+private static Singleton instance;<br>
+private Singleton() {}<br>
+  public static Singleton Instance<br>
+  {<br>
+       get<br>
+          {<br>
+           if (instance == null)<br>
+                {
+                  instance = new Singleton();<br>
+                }
+           return instance;<br>
+            }<br>
+          }
+  }<br>
+Advantage of the following implementation: lazy initialization – not initialized until asked for instance
+Disadvantage: not thread safe. If multiple threads enter the if block simultaneously then multiple instances might be created.</p>
+
+<p>In case of implementing a singleton in multithread environment use locks 
+Discussion from <a>stackoverflow</a></p>
+
+<p>Reason for why use an private object to lock in a multithreaded environment</p>
+
+<p>If you have an internal data structure that you want to prevent simultaneous access to by multiple threads, you should always make sure the object you're locking on is not public.The reasoning behind this is that a public object can be locked by anyone, and thus you can create deadlocks because you're not in total control of the locking pattern.This means that locking on this is not an option, since anyone can lock on that object. Likewise, you should not lock on something you expose to the outside world.Which means that the best solution is to use an internal object, and thus the tip is to just use Object.
+Locking data structures is something you really need to have full control over, otherwise you risk setting up a scenario for deadlocking, which can be very problematic to handle.
+Marking the class as sealed makes sure that no one can inherit from the class. If someone inherits from the class then it may end up instantiating the class. This would happen if a derived class is instantiated, which would in turn call the base class constructor (even if it is private).<a href="http://stackoverflow.com/a/728913/147306">1</a></p>
+
+<p>Following code snippet is from <a href="http://msdn.microsoft.com/en-us/library/ff650316.aspx">MSDN</a>
+using System;<br>
+public sealed class Singleton {<br>
+      private static volatile Singleton instance;<br>
+     private static object syncRoot = new Object();<br>
+      private Singleton() {}<br>
+    public static Singleton Instance    {<br>
+     get<br>
+    {<br>
+         if (instance == null)<br>
+        {<br>
+             lock (syncRoot)<br>
+              {<br>
+                if (instance == null)<br>
+                instance = new Singleton();<br>
+     }<br>
+                        }<br>
+    return instance;<br>
+    }<br>
+      } 
+}  </p>
+
+<p>A singleton allows access to a single created instance - that instance (or rather, a reference to that instance) can be passed as a parameter to other methods, and treated as a normal object.</p>
+
+<p>A static class allows only static methods.<a href="http://stackoverflow.com/a/519536/147306">Jon Skeet on static vs singleton class</a></p>
+
+<p>References:</p>
+
+<ol>
+<li><p><a href="http://stackoverflow.com/questions/11668390/why-singleton-class-should-be-sealed">Why singleton class should be sealed</a></p></li>
+<li><p><a href="http://msdn.microsoft.com/en-us/library/ff650316.aspx">MSDN</a></p></li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Learningblog maintained by <a href="https://github.com/jpoth">jpoth</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
