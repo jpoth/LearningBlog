@@ -39,18 +39,18 @@ Singleton: A class which only a single instance can exist.</p>
 <p>using System;<br>
 public class Singleton {<br>
 private static Singleton instance;<br>
-private Singleton() {}<br>
+private Singleton() { }<br>
   public static Singleton Instance<br>
   {<br>
-        get<br>
-           {<br>
-            if (instance == null)<br>
-                 {
-                   instance = new Singleton();<br>
-                 }
-             return instance;<br>
-            }<br>
-          }
+        &nbsp; get<br>
+           &nbsp; &nbsp; {<br>
+            &nbsp; &nbsp; &nbsp; if (instance == null)<br>
+                 &nbsp; &nbsp; &nbsp; {
+                  &nbsp; &nbsp; &nbsp; &nbsp;  instance = new Singleton();<br>
+                 &nbsp; &nbsp; &nbsp; }
+             &nbsp; &nbsp; &nbsp; return instance;<br>
+            &nbsp; &nbsp; }<br>
+          &nbsp; }
   }<br>
 Advantage of the following implementation: lazy initialization – not initialized until asked for instance
 Disadvantage: not thread safe. If multiple threads enter the if block simultaneously then multiple instances might be created.</p>
